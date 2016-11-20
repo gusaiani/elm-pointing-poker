@@ -1,0 +1,1 @@
+- [ ] use elm-fire instead of port + firebase.js
