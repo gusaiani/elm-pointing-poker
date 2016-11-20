@@ -1,1 +1,3 @@
+- [ ] validate User and Room name at login page
+- [ ] show average vote
 - [ ] use elm-fire instead of port + firebase.js
