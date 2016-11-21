@@ -25,7 +25,7 @@ update msg login =
                 cmd =
                     case newLogin.isValid of
                         True ->
-                            fbJoinRoom login.userName
+                            fbJoinRoom login
 
                         False ->
                             Cmd.none

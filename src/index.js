@@ -35,7 +35,7 @@ app.ports.fetchRoomData.subscribe(function(room) {
 		if (snapshot.val()) {
 			app.ports.roomData.send(snapshot.val())
 		}
-	})
+	});
 });
 
 // Vote
@@ -53,11 +53,23 @@ app.ports.fbEditQuestion.subscribe(function(question) {
 		.set(question)
 })
 
-app.ports.fbJoinRoom.subscribe(function(userName) {
+app.ports.fbJoinRoom.subscribe(function(data) {
+	if (roomRef) {
+		roomRef.off();
+	}
+
+	roomRef = fb.ref("rooms/" + data.roomName)
+
+	roomRef.on("value", function(snapshot) {
+		if (snapshot.val()) {
+			app.ports.roomData.send(snapshot.val())
+		}
+	})
+
 	var amOnline = fb.ref(".info/connected");
 	amOnline.on("value", function(snapshot) {
 		if (snapshot.val()) {
-			var userRef = roomRef.child("users").child(userName);
+			var userRef = roomRef.child("users").child(data.userName);
 			userRef.onDisconnect().remove();
 			userRef.set(0);
 		}

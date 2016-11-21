@@ -4,7 +4,7 @@ import Login.Models exposing (Login)
 import Regex
 
 
-port fbJoinRoom : String -> Cmd msg
+port fbJoinRoom : Login -> Cmd msg
 
 
 validateLogin : Login -> Login
