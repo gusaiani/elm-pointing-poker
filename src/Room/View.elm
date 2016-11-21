@@ -57,35 +57,35 @@ renderVoteSection =
                     [ class "button"
                     , onClick (Vote 1)
                     ]
-                    [ text "1" ]
+                    [ text "1 point" ]
                 ]
             , p [ class "control" ]
                 [ a
                     [ class "button"
                     , onClick (Vote 2)
                     ]
-                    [ text "2" ]
+                    [ text "2 points" ]
                 ]
             , p [ class "control" ]
                 [ a
                     [ class "button"
                     , onClick (Vote 3)
                     ]
-                    [ text "3" ]
+                    [ text "3 points" ]
                 ]
             , p [ class "control" ]
                 [ a
                     [ class "button"
                     , onClick (Vote 4)
                     ]
-                    [ text "4" ]
+                    [ text "4 points" ]
                 ]
             , p [ class "control" ]
                 [ a
                     [ class "button"
                     , onClick (Vote 5)
                     ]
-                    [ text "5" ]
+                    [ text "5 points" ]
                 ]
             ]
         ]
@@ -97,18 +97,32 @@ renderUsersSection items =
         userList =
             items
                 |> List.map renderUser
+        totalVotes =
+            items
+                |> List.map (\(a, b) -> b)
+                |> List.sum
+
+        numOfVotes =
+            items
+                |> List.filter (\(a, b) -> b >= 0)
+                |> List.length
+
+        average = toFloat totalVotes / toFloat numOfVotes
     in
-        table [ class "table" ]
-            [ thead []
-                [ tr []
-                    [ th []
-                        [ text "Name" ]
-                    , th []
-                        [ text "Vote" ]
-                    ]
-                ]
-            , Keyed.node "tbody" [] (userList)
-            ]
+        div []
+        [ label [ class "label" ] [ text ("Average Score: " ++ (toString average)) ]
+        , table [ class "table" ]
+              [ thead []
+                  [ tr []
+                      [ th []
+                          [ text "Name" ]
+                      , th []
+                          [ text "Points" ]
+                      ]
+                  ]
+              , Keyed.node "tbody" [] (userList)
+              ]
+        ]
 
 
 renderUser : ( String, Int ) -> ( String, Html Msg )
