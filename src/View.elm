@@ -77,23 +77,9 @@ renderHeaderBody : Model -> Html Msg
 renderHeaderBody model =
     div [ class "columns is-vcentered" ]
         [ div [ class "column" ]
-            [ p [ class "title" ]
-                [ text ("Room: " ++ model.login.roomName) ]
-            , p [ class "subtitle" ]
+            [ h4 [ class "title" ]
                 [ text ("User: " ++ model.login.userName) ]
+            , h6 [ class "subtitle" ]
+                [ text ("http://elm-pointing-poker.com/#" ++ model.login.roomName) ]
             ]
         ]
-
-
-
--- section [ class "hero is-info is-bold" ]
---     [ div [ class "hero-body" ]
---         [ div [ class "container" ]
---             [ h1 [ class "title" ]
---                 [ text "Pointing Poker" ]
---             , text ("Room: " ++ model.login.roomName)
---             , br [] []
---             , text ("User: " ++ model.login.userName)
---             ]
---         ]
---     ]
