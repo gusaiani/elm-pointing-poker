@@ -47,48 +47,34 @@ renderQuestionSection question =
             ]
 
 
+renderButton : (Int, String) -> (String, Html Msg)
+renderButton (vote, label) =
+    ( label
+    , p [ class "control" ]
+        [ a
+            [ class "button"
+            , onClick (Vote vote)
+            ]
+            [ text label ]
+        ]
+    )
+
+
 renderVoteSection : Html Msg
 renderVoteSection =
-    div []
-        [ label [ class "label" ] [ text "Your Vote" ]
-        , div [ class "control is-grouped" ]
-            [ p [ class "control" ]
-                [ a
-                    [ class "button"
-                    , onClick (Vote 1)
-                    ]
-                    [ text "1 point" ]
+    let
+        items = [ (1, "1 point")
+                , (2, "2 points")
+                , (3, "3 points")
+                , (4, "4 points")
+                , (5, "5 points")
                 ]
-            , p [ class "control" ]
-                [ a
-                    [ class "button"
-                    , onClick (Vote 2)
-                    ]
-                    [ text "2 points" ]
-                ]
-            , p [ class "control" ]
-                [ a
-                    [ class "button"
-                    , onClick (Vote 3)
-                    ]
-                    [ text "3 points" ]
-                ]
-            , p [ class "control" ]
-                [ a
-                    [ class "button"
-                    , onClick (Vote 4)
-                    ]
-                    [ text "4 points" ]
-                ]
-            , p [ class "control" ]
-                [ a
-                    [ class "button"
-                    , onClick (Vote 5)
-                    ]
-                    [ text "5 points" ]
-                ]
+        buttons = List.map renderButton items
+    in
+        div []
+            [ label [ class "label" ] [ text "Your Vote" ]
+            , Keyed.node "div" [class "control is-grouped"] (buttons)
             ]
-        ]
 
 
 renderUsersSection : List ( String, Int ) -> Html Msg
