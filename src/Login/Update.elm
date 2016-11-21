@@ -1,8 +1,9 @@
 module Login.Update exposing (update)
 
-import Login.Commands exposing (fbJoinRoom)
+import Login.Commands exposing (fbJoinRoom, validateLogin)
 import Login.Messages exposing (Msg(..))
 import Login.Models exposing (Login)
+
 
 update : Msg -> Login -> ( Login, Cmd Msg )
 update msg login =
@@ -11,11 +12,22 @@ update msg login =
             ( login, Cmd.none )
 
         EditRoomName name ->
-            ( { login | roomName = name}, Cmd.none)
+            ( { login | roomName = name }, Cmd.none )
 
         EditUserName name ->
-            ( { login | userName = name}, Cmd.none)
+            ( { login | userName = name }, Cmd.none )
 
         SubmitForm ->
-            -- TODO: Add validation
-            ( {login | isValid = True}, fbJoinRoom login.userName)
+            let
+                newLogin =
+                    validateLogin login
+
+                cmd =
+                    case newLogin.isValid of
+                        True ->
+                            fbJoinRoom login.userName
+
+                        False ->
+                            Cmd.none
+            in
+                ( newLogin, cmd )

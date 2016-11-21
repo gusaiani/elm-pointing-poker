@@ -6,6 +6,7 @@ import Room.Update
 import Login.Update
 import Room.Commands exposing (receive)
 
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -18,7 +19,8 @@ update msg model =
 
         LoginMsg subMsg ->
             let
-                ( authData, cmd ) = Login.Update.update subMsg model.login
+                ( authData, cmd ) =
+                    Login.Update.update subMsg model.login
             in
                 ( { model | login = authData }, Cmd.map LoginMsg cmd )
 

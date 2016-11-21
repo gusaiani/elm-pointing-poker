@@ -15,10 +15,13 @@ type alias Flags =
 init : Flags -> ( Model, Cmd Msg )
 init flags =
     let
-        login = initModel.login
-        newLogin = {login | roomName = flags.room}
+        login =
+            initModel.login
+
+        newLogin =
+            { login | roomName = flags.room }
     in
-        ( {initModel | login = newLogin}, fetchRoomData flags.room )
+        ( { initModel | login = newLogin }, fetchRoomData flags.room )
 
 
 port fetchRoomData : String -> Cmd msg

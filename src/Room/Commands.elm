@@ -8,7 +8,9 @@ import Room.Models exposing (Item, ItemId, Room)
 import Room.Messages exposing (..)
 
 
-port fbVote : {id: String, vote: Int} -> Cmd msg
+port fbVote : { id : String, vote : Int } -> Cmd msg
+
+
 port fbEditQuestion : String -> Cmd msg
 
 
@@ -18,7 +20,6 @@ receive json =
         decodedItemsResult =
             Decode.decodeValue roomDecoder json
 
-
         room =
             case decodedItemsResult of
                 Ok decodedItems ->
@@ -26,7 +27,8 @@ receive json =
 
                 Err err ->
                     let
-                        _ =  Debug.log "error" err
+                        _ =
+                            Debug.log "error" err
                     in
                         Room (Just "ERROR") Dict.empty
     in
@@ -42,7 +44,7 @@ roomDecoder =
 
 itemEncoded : Item -> Encode.Value
 itemEncoded item =
-        [ ( "name", Encode.string item.name )
-        , ( "vote", Encode.int item.vote )
-        ]
-            |> Encode.object
+    [ ( "name", Encode.string item.name )
+    , ( "vote", Encode.int item.vote )
+    ]
+        |> Encode.object
