@@ -1,16 +1,6 @@
-module Room.Models exposing (Room, Item, ItemId)
+module Room.Models exposing (Room)
 
 import Dict
-
-
-type alias ItemId =
-    String
-
-
-type alias Item =
-    { name : String
-    , vote : Int
-    }
 
 
 type alias Room =

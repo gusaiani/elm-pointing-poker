@@ -6,6 +6,7 @@ import Models exposing (Model, initModel)
 import View exposing (view)
 import Update exposing (update)
 import Json.Encode as Encode
+import Platform.Sub
 
 
 type alias Flags =
@@ -21,10 +22,8 @@ init flags =
         newLogin =
             { login | roomName = flags.room }
     in
-        ( { initModel | login = newLogin }, fetchRoomData flags.room )
+        ( { initModel | login = newLogin }, Cmd.none )
 
-
-port fetchRoomData : String -> Cmd msg
 
 
 port roomData : (Encode.Value -> msg) -> Sub msg
@@ -35,5 +34,5 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = (\_ -> roomData ReceiveFBData)
+        , subscriptions = (\_ -> roomData ReceiveFBRoomData)
         }

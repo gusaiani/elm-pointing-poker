@@ -2,9 +2,10 @@ module Update exposing (..)
 
 import Messages exposing (Msg(..))
 import Models exposing (Model)
-import Room.Update
+import Login.Commands
 import Login.Update
-import Room.Commands exposing (receive)
+import Room.Update
+import Room.Commands
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -24,5 +25,5 @@ update msg model =
             in
                 ( { model | login = authData }, Cmd.map LoginMsg cmd )
 
-        ReceiveFBData json ->
-            ( model, Cmd.map RoomMsg (receive json) )
+        ReceiveFBRoomData json ->
+            ( model, Cmd.map RoomMsg (Room.Commands.receive json) )

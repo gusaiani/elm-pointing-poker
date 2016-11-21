@@ -2,11 +2,11 @@ module Room.Update exposing (update)
 
 import Room.Commands exposing (fbEditQuestion, fbVote)
 import Room.Messages exposing (Msg(..))
-import Room.Models exposing (Room, Item)
+import Room.Models exposing (Room)
 
 
 update : Msg -> Room -> String -> ( Room, Cmd Msg )
-update msg room userId =
+update msg room userName =
     case msg of
         RoomUpdate newRoom ->
             ( newRoom, Cmd.none )
@@ -17,7 +17,7 @@ update msg room userId =
         Vote vote ->
             ( room
             , fbVote
-                ({ id = userId
+                ({ userName = userName
                  , vote = vote
                  }
                 )

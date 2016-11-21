@@ -1,6 +1,6 @@
 module Room.Messages exposing (..)
 
-import Room.Models exposing (Room, Item, ItemId)
+import Room.Models exposing (Room)
 
 
 type Msg

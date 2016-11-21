@@ -6,7 +6,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Html.Keyed as Keyed
 import Room.Messages exposing (..)
-import Room.Models exposing (Item, ItemId, Room)
+import Room.Models exposing (Room)
 
 
 view : Room -> Html Msg
@@ -17,7 +17,7 @@ view room =
             , renderVoteSection
             ]
         , div [ class "column is-5" ]
-            [ renderUsersSection (Dict.toList room.items)
+            [ renderUsersSection room.items
             ]
         ]
 
@@ -77,20 +77,24 @@ renderVoteSection =
             ]
 
 
-renderUsersSection : List ( String, Int ) -> Html Msg
+renderUsersSection : Dict.Dict String Int -> Html Msg
 renderUsersSection items =
     let
         userList =
             items
+                |> Dict.toList
                 |> List.map renderUser
+
         totalVotes =
             items
-                |> List.map (\(a, b) -> b)
+                |> Dict.toList
+                |> List.map (\(name, vote) -> vote)
                 |> List.sum
 
         numOfVotes =
             items
-                |> List.filter (\(a, b) -> b >= 0)
+                |> Dict.toList
+                |> List.filter (\(name, vote) -> vote >= 0)
                 |> List.length
 
         average = toFloat totalVotes / toFloat numOfVotes
@@ -111,8 +115,8 @@ renderUsersSection items =
         ]
 
 
-renderUser : ( String, Int ) -> ( String, Html Msg )
-renderUser ( name, vote ) =
+renderUser : (String, Int) -> ( String, Html Msg )
+renderUser (name, vote) =
     ( (toString name)
     , tr []
         [ td []

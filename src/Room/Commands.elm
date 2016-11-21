@@ -4,11 +4,11 @@ import Dict
 import Json.Decode as Decode exposing (field)
 import Json.Encode as Encode
 import Task
-import Room.Models exposing (Item, ItemId, Room)
+import Room.Models exposing (Room)
 import Room.Messages exposing (..)
 
 
-port fbVote : { id : String, vote : Int } -> Cmd msg
+port fbVote : { userName : String, vote : Int } -> Cmd msg
 
 
 port fbEditQuestion : String -> Cmd msg
@@ -40,11 +40,3 @@ roomDecoder =
     Decode.map2 Room
         (Decode.maybe (field "question" Decode.string))
         (field "users" (Decode.dict Decode.int))
-
-
-itemEncoded : Item -> Encode.Value
-itemEncoded item =
-    [ ( "name", Encode.string item.name )
-    , ( "vote", Encode.int item.vote )
-    ]
-        |> Encode.object

@@ -8,8 +8,8 @@ import Login.Models exposing (Login)
 update : Msg -> Login -> ( Login, Cmd Msg )
 update msg login =
     case msg of
-        LoginUpdate a ->
-            ( login, Cmd.none )
+        LoginUpdate newLogin ->
+            ( newLogin, Cmd.none )
 
         EditRoomName name ->
             ( { login | roomName = name }, Cmd.none )

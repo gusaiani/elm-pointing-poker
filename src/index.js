@@ -21,38 +21,6 @@ var app = Elm.Main.embed(mountNode, {
 
 // Fetch Firebase data
 var roomRef = null
-app.ports.fetchRoomData.subscribe(function(room) {
-	if (roomRef) {
-		roomRef.off();
-	}
-
-	if (!room) {
-		return;
-	}
-
-	roomRef = fb.ref("rooms/" + room)
-	roomRef.on("value", function(snapshot) {
-		if (snapshot.val()) {
-			app.ports.roomData.send(snapshot.val())
-		}
-	});
-});
-
-// Vote
-app.ports.fbVote.subscribe(function(data) {
-	roomRef
-		.child("users")
-		.child(data.id)
-		.set(data.vote)
-})
-
-// Vote
-app.ports.fbEditQuestion.subscribe(function(question) {
-	roomRef
-		.child("question")
-		.set(question)
-})
-
 app.ports.fbJoinRoom.subscribe(function(data) {
 	if (roomRef) {
 		roomRef.off();
@@ -75,3 +43,19 @@ app.ports.fbJoinRoom.subscribe(function(data) {
 		}
 	});
 });
+
+// Vote
+app.ports.fbVote.subscribe(function(data) {
+	roomRef
+		.child("users")
+		.child(data.userName)
+		.set(data.vote)
+})
+
+// Vote
+app.ports.fbEditQuestion.subscribe(function(question) {
+	roomRef
+		.child("question")
+		.set(question)
+})
+

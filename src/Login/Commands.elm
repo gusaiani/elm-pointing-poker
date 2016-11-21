@@ -1,8 +1,12 @@
 port module Login.Commands exposing (..)
 
-import Login.Models exposing (Login)
+import Login.Models exposing (Login, initLogin)
 import Regex
-
+import Dict
+import Json.Decode as Decode exposing (field)
+import Json.Encode as Encode
+import Task
+import Login.Messages exposing (..)
 
 port fbJoinRoom : Login -> Cmd msg
 

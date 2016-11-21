@@ -13,5 +13,4 @@ type alias Model =
 
 initModel : Model
 initModel =
-    -- Model (Room "" Dict.empty) "Demo" "-KWxMnF7pq-afV2uovDP"
     Model (Room (Just "") Dict.empty) initLogin
