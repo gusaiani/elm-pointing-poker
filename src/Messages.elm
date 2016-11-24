@@ -9,3 +9,4 @@ type Msg
     = RoomMsg Room.Messages.Msg
     | LoginMsg Login.Messages.Msg
     | ReceiveFBRoomData Encode.Value
+    | ReceiveFBIsNameAvailable Encode.Value

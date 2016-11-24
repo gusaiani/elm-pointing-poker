@@ -1,7 +1,7 @@
 port module Room.Commands exposing (..)
 
 import Dict
-import Json.Decode as Decode exposing (field)
+import Json.Decode as Decode
 import Json.Encode as Encode
 import Task
 import Room.Models exposing (Room)
@@ -30,7 +30,7 @@ receive json =
                         _ =
                             Debug.log "error" err
                     in
-                        Room (Just "ERROR") Dict.empty
+                        Room "" Dict.empty
     in
         Task.perform RoomUpdate (Task.succeed room)
 
@@ -38,5 +38,9 @@ receive json =
 roomDecoder : Decode.Decoder Room
 roomDecoder =
     Decode.map2 Room
-        (Decode.maybe (field "question" Decode.string))
-        (field "users" (Decode.dict Decode.int))
+        (Decode.oneOf
+            [ Decode.field "question" Decode.string
+            , Decode.succeed "Default question"
+            ]
+        )
+        (Decode.field "users" (Decode.dict Decode.int))

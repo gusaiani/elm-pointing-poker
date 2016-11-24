@@ -25,8 +25,10 @@ init flags =
         ( { initModel | login = newLogin }, Cmd.none )
 
 
+port receiveRoomData : (Encode.Value -> msg) -> Sub msg
 
-port roomData : (Encode.Value -> msg) -> Sub msg
+
+port receiveIsNameAvailable : (Encode.Value -> msg) -> Sub msg
 
 
 main =
@@ -34,5 +36,11 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = (\_ -> roomData ReceiveFBRoomData)
+        , subscriptions =
+            (\model ->
+                Platform.Sub.batch
+                    [ receiveRoomData ReceiveFBRoomData
+                    , receiveIsNameAvailable ReceiveFBIsNameAvailable
+                    ]
+            )
         }

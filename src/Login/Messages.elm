@@ -7,4 +7,5 @@ type Msg
     = LoginUpdate Login
     | EditRoomName String
     | EditUserName String
+    | IsNameAvailable Bool
     | SubmitForm

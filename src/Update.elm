@@ -1,11 +1,13 @@
 module Update exposing (..)
 
+import Json.Decode as Decode
+import Task
 import Messages exposing (Msg(..))
 import Models exposing (Model)
-import Login.Commands
+import Login.Messages
 import Login.Update
-import Room.Update
 import Room.Commands
+import Room.Update
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -20,10 +22,30 @@ update msg model =
 
         LoginMsg subMsg ->
             let
-                ( authData, cmd ) =
+                ( newLogin, cmd ) =
                     Login.Update.update subMsg model.login
             in
-                ( { model | login = authData }, Cmd.map LoginMsg cmd )
+                ( { model | login = newLogin }, Cmd.map LoginMsg cmd )
 
         ReceiveFBRoomData json ->
             ( model, Cmd.map RoomMsg (Room.Commands.receive json) )
+
+        ReceiveFBIsNameAvailable json ->
+            let
+                decodedResult =
+                    Decode.decodeValue Decode.bool json
+
+                isNameAvailable =
+                    case decodedResult of
+                        Ok decoded ->
+                            decoded
+
+                        Err err ->
+                            False
+            in
+                ( model
+                , Cmd.map LoginMsg
+                    (Task.perform Login.Messages.IsNameAvailable
+                        (Task.succeed isNameAvailable)
+                    )
+                )

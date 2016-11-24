@@ -1,7 +1,6 @@
 module Models exposing (..)
 
-import Dict
-import Room.Models exposing (Room)
+import Room.Models exposing (Room, initRoom)
 import Login.Models exposing (Login, initLogin)
 
 
@@ -13,4 +12,4 @@ type alias Model =
 
 initModel : Model
 initModel =
-    Model (Room (Just "") Dict.empty) initLogin
+    Model initRoom initLogin

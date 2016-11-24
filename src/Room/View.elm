@@ -2,7 +2,7 @@ module Room.View exposing (..)
 
 import Dict
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (class, placeholder, value)
 import Html.Events exposing (onClick, onInput)
 import Html.Keyed as Keyed
 import Room.Messages exposing (..)
@@ -22,33 +22,24 @@ view room =
         ]
 
 
-renderQuestionSection : Maybe String -> Html Msg
+renderQuestionSection : String -> Html Msg
 renderQuestionSection question =
-    let
-        val =
-            case question of
-                Just q ->
-                    q
-
-                Nothing ->
-                    ""
-    in
-        div [ class "control is-grouped" ]
-            [ p [ class "control is-expanded" ]
-                [ label [ class "label" ] [ text "Question" ]
-                , input
-                    [ class "input"
-                    , placeholder "Enter task description"
-                    , onInput EditQuestion
-                    , value val
-                    ]
-                    []
+    div [ class "control is-grouped" ]
+        [ p [ class "control is-expanded" ]
+            [ label [ class "label" ] [ text "Question" ]
+            , input
+                [ class "input"
+                , placeholder "Enter task description"
+                , onInput EditQuestion
+                , value question
                 ]
+                []
             ]
+        ]
 
 
-renderButton : (Int, String) -> (String, Html Msg)
-renderButton (vote, label) =
+renderButton : ( Int, String ) -> ( String, Html Msg )
+renderButton ( vote, label ) =
     ( label
     , p [ class "control" ]
         [ a
@@ -63,17 +54,20 @@ renderButton (vote, label) =
 renderVoteSection : Html Msg
 renderVoteSection =
     let
-        items = [ (1, "1 point")
-                , (2, "2 points")
-                , (3, "3 points")
-                , (4, "4 points")
-                , (5, "5 points")
-                ]
-        buttons = List.map renderButton items
+        items =
+            [ ( 1, "1 point" )
+            , ( 2, "2 points" )
+            , ( 3, "3 points" )
+            , ( 4, "4 points" )
+            , ( 5, "5 points" )
+            ]
+
+        buttons =
+            List.map renderButton items
     in
         div []
             [ label [ class "label" ] [ text "Your Vote" ]
-            , Keyed.node "div" [class "control is-grouped"] (buttons)
+            , Keyed.node "div" [ class "control is-grouped" ] (buttons)
             ]
 
 
@@ -88,35 +82,36 @@ renderUsersSection items =
         totalVotes =
             items
                 |> Dict.toList
-                |> List.map (\(name, vote) -> vote)
+                |> List.map (\( name, vote ) -> vote)
                 |> List.sum
 
         numOfVotes =
             items
                 |> Dict.toList
-                |> List.filter (\(name, vote) -> vote >= 0)
+                |> List.filter (\( name, vote ) -> vote >= 0)
                 |> List.length
 
-        average = toFloat totalVotes / toFloat numOfVotes
+        average =
+            toFloat totalVotes / toFloat numOfVotes
     in
         div []
-        [ label [ class "label" ] [ text ("Average Score: " ++ (toString average)) ]
-        , table [ class "table" ]
-              [ thead []
-                  [ tr []
-                      [ th []
-                          [ text "Name" ]
-                      , th []
-                          [ text "Points" ]
-                      ]
-                  ]
-              , Keyed.node "tbody" [] (userList)
-              ]
-        ]
+            [ label [ class "label" ] [ text ("Average Score: " ++ (toString average)) ]
+            , table [ class "table" ]
+                [ thead []
+                    [ tr []
+                        [ th []
+                            [ text "Name" ]
+                        , th []
+                            [ text "Points" ]
+                        ]
+                    ]
+                , Keyed.node "tbody" [] (userList)
+                ]
+            ]
 
 
-renderUser : (String, Int) -> ( String, Html Msg )
-renderUser (name, vote) =
+renderUser : ( String, Int ) -> ( String, Html Msg )
+renderUser ( name, vote ) =
     ( (toString name)
     , tr []
         [ td []

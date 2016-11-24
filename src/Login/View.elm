@@ -2,7 +2,7 @@ module Login.View exposing (..)
 
 import Html exposing (..)
 import Html.Events exposing (onInput, onClick)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (class, placeholder, value)
 import Login.Messages exposing (..)
 import Login.Models exposing (Login)
 

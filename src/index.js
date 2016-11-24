@@ -30,7 +30,7 @@ app.ports.fbJoinRoom.subscribe(function(data) {
 
 	roomRef.on("value", function(snapshot) {
 		if (snapshot.val()) {
-			app.ports.roomData.send(snapshot.val())
+			app.ports.receiveRoomData.send(snapshot.val())
 		}
 	})
 
@@ -44,7 +44,20 @@ app.ports.fbJoinRoom.subscribe(function(data) {
 	});
 });
 
-// Vote
+// Validate User Name
+app.ports.checkIsNameAvailable.subscribe(function(data) {
+	fb.ref("rooms")
+		.child(data.roomName)
+		.child("users")
+		.child(data.userName)
+		.once("value", function(snapshot) {
+			var val = snapshot.val();
+			const isNameAvailable = val === null
+			app.ports.receiveIsNameAvailable.send(isNameAvailable);
+		})
+});
+
+// Submit Vote
 app.ports.fbVote.subscribe(function(data) {
 	roomRef
 		.child("users")
@@ -52,7 +65,7 @@ app.ports.fbVote.subscribe(function(data) {
 		.set(data.vote)
 })
 
-// Vote
+// Edit Room's Question
 app.ports.fbEditQuestion.subscribe(function(question) {
 	roomRef
 		.child("question")

@@ -12,7 +12,7 @@ update msg room userName =
             ( newRoom, Cmd.none )
 
         EditQuestion newQuestion ->
-            ( { room | question = (Just newQuestion) }, fbEditQuestion newQuestion )
+            ( { room | question = newQuestion }, fbEditQuestion newQuestion )
 
         Vote vote ->
             ( room

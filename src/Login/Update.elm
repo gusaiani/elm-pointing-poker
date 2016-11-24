@@ -1,6 +1,6 @@
 module Login.Update exposing (update)
 
-import Login.Commands exposing (fbJoinRoom, validateLogin)
+import Login.Commands exposing (checkIsNameAvailable, fbJoinRoom, validateLogin)
 import Login.Messages exposing (Msg(..))
 import Login.Models exposing (Login)
 
@@ -11,6 +11,28 @@ update msg login =
         LoginUpdate newLogin ->
             ( newLogin, Cmd.none )
 
+        IsNameAvailable isNameAvailable ->
+            let
+                errors =
+                    login.errors
+
+                ( cmd, newErrors ) =
+                    case isNameAvailable of
+                        True ->
+                            ( fbJoinRoom login, errors )
+
+                        False ->
+                            ( Cmd.none
+                            , { errors | userName = "This name is already in use. Try anouther one." }
+                            )
+            in
+                ( { login
+                    | isValid = isNameAvailable
+                    , errors = newErrors
+                  }
+                , cmd
+                )
+
         EditRoomName name ->
             ( { login | roomName = name }, Cmd.none )
 
@@ -19,13 +41,13 @@ update msg login =
 
         SubmitForm ->
             let
-                newLogin =
+                ( isValid, newLogin ) =
                     validateLogin login
 
                 cmd =
-                    case newLogin.isValid of
+                    case isValid of
                         True ->
-                            fbJoinRoom login
+                            checkIsNameAvailable login
 
                         False ->
                             Cmd.none

@@ -1,9 +1,14 @@
-module Room.Models exposing (Room)
+module Room.Models exposing (..)
 
 import Dict
 
 
 type alias Room =
-    { question : Maybe String
+    { question : String
     , items : Dict.Dict String Int
     }
+
+
+initRoom : Room
+initRoom =
+    Room "" Dict.empty
