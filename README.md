@@ -19,7 +19,6 @@ _Inspired by https://github.com/mblarsen/elm-fire-grocery_
 
 ## Install:
 
-    elm-package install
     npm install
 
 ## Build:
@@ -34,3 +33,7 @@ Be sure to configure your firebase database in `config.js`. Copy
 Then start the webpack dev server:
 
     npm run dev
+
+## Deploy
+
+    npm run deploy
