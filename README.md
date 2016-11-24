@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/liubko/elm-pointing-poker.svg?style=svg)](https://circleci.com/gh/liubko/elm-pointing-poker)
+
 # Simple Pointing Poker in Elm and Firebase
 
 This is a tiny project with the sole purpose of learning Elm.
@@ -6,6 +8,12 @@ Working demo: ----
 
 
 # Getting started
+
+## Requirements:
+
+    node v4.6.1
+    npm v3.9.6
+    elm v0.18.0
 
 ## Install:
 

@@ -12,7 +12,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liubko/elm-pointing-poker.git"
-
   },
   "author": "Liubomyr Mykhalchenko <liubko.qwert@gmail.com>",
   "license": "MIT",
