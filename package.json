@@ -5,7 +5,7 @@
   "main": "elm.js",
   "scripts": {
     "api": "node api.js",
-    "build": "webpack",
+    "build": "rm -rf dist && webpack",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --port 3000"
   },
