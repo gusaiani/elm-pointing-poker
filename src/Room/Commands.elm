@@ -40,7 +40,7 @@ roomDecoder =
     Decode.map2 Room
         (Decode.oneOf
             [ Decode.field "question" Decode.string
-            , Decode.succeed "Default question"
+            , Decode.succeed ""
             ]
         )
         (Decode.field "users" (Decode.dict Decode.int))

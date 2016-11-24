@@ -13,6 +13,7 @@ var fb = firebase
 
 // Embed Elm
 var Elm = require("./Main.elm")
+console.log("Elm", Elm);
 var mountNode = document.getElementById("main")
 var room = window.location.hash.substr(1)
 var app = Elm.Main.embed(mountNode, {
