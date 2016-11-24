@@ -80,6 +80,6 @@ renderHeaderBody model =
             [ h4 [ class "title" ]
                 [ text ("User: " ++ model.login.userName) ]
             , h6 [ class "subtitle" ]
-                [ text ("https://poker-94672.firebaseapp.com/" ++ model.login.roomName) ]
+                [ text ("https://poker-94672.firebaseapp.com/#" ++ model.login.roomName) ]
             ]
         ]
