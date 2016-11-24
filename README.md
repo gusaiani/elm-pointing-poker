@@ -1,13 +1,8 @@
-[![CircleCI](https://circleci.com/gh/liubko/elm-pointing-poker.svg?style=svg)](https://circleci.com/gh/liubko/elm-pointing-poker)
-
 # Simple Pointing Poker in Elm and Firebase
 
 This is a tiny project with the sole purpose of learning Elm.
 
 Working demo: https://poker-94672.firebaseapp.com
-
-_Inspired by https://github.com/mblarsen/elm-fire-grocery_
-
 
 # Getting started
 
@@ -37,3 +32,7 @@ Then start the webpack dev server:
 ## Deploy
 
     npm run deploy
+
+----
+
+_Inspired by https://github.com/mblarsen/elm-fire-grocery_
