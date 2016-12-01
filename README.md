@@ -1,10 +1,10 @@
-![Demo GIF](./demo.gif?raw=true "Demo")
-
 # Simple Pointing Poker in Elm and Firebase
 
 This is a tiny project with the sole purpose of learning Elm.
 
 Working demo: https://poker-94672.firebaseapp.com
+
+![Demo GIF](./demo.gif?raw=true "Demo")
 
 # Getting started
 
